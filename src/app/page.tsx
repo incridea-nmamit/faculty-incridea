@@ -1,5 +1,24 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import PleaseLogin from "./_components/pleaseLogin";
+import Unauthorised from "./_components/unauthorised";
+
 export default function Home() {
-  return <></>;
+  const { data: session } = useSession();
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      {!session?.user ? (
+        <PleaseLogin />
+      ) : session.user.role === "ADMIN" ? (
+        <>Admin</>
+      ) : session.user.role === "VOLUNTEER" ? (
+        <>Volunteer</>
+      ) : !session.user.email.endsWith("@nitte.edu.in") ? (
+        <Unauthorised />
+      ) : (
+        <>Hello</>
+      )}
+    </div>
+  );
 }

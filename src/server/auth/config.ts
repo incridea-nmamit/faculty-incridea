@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { ExtraPass, type Role } from "@prisma/client";
+import { type ExtraPass, type Role } from "@prisma/client";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { env } from "~/env";
