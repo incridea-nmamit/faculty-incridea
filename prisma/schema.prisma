@@ -43,10 +43,13 @@ model Session {
 }
 
 model User {
-    id       Int    @id @default(autoincrement())
-    name     String
-    email    String @unique
-    password String
+    id           Int     @id @default(autoincrement())
+    name         String
+    email        String  @unique
+    role         Role
+    passClaimed  Boolean @default(false)
+    attendedDay1 Boolean @default(false)
+    attendedDay2 Boolean @default(false)
 
     emailVerified DateTime?
     accounts      Account[]
@@ -63,11 +66,13 @@ model VerificationToken {
 }
 
 model ExtraPass {
-    id       Int      @id @default(autoincrement())
-    name     String
-    relation Relation
-    age      Int
-    idProof  String
+    id           Int      @id @default(autoincrement())
+    name         String
+    relation     Relation
+    age          Int
+    idProof      String
+    attendedDay1 Boolean  @default(false)
+    attendedDay2 Boolean  @default(false)
 
     DependantOn User @relation(fields: [userId], references: [id])
     userId      Int
@@ -80,4 +85,10 @@ enum Relation {
     CHILD
     SIBLING
     SPOUSE
+}
+
+enum Role {
+    ADMIN
+    USER
+    VOLUNTEER
 }
