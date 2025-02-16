@@ -18,7 +18,8 @@ declare module "next-auth" {
       id: number;
       email: string;
       passClaimed: boolean;
-      // extraPasses: ExtraPass[];
+      attendedDay1: boolean;
+      attendedDay2: boolean;
       role: Role;
     } & DefaultSession["user"];
   }
@@ -66,6 +67,8 @@ export const authConfig = {
           // extraPasses: dbUser?.ExtraPass ?? [],
           role: dbUser?.role ?? "USER",
           passClaimed: dbUser?.passClaimed ?? false,
+          attendedDay1: dbUser?.attendedDay1 ?? false,
+          attendedDay2: dbUser?.attendedDay2 ?? false,
         },
       };
     },
