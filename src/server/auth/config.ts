@@ -15,10 +15,10 @@ import { db } from "~/server/db";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      id: string;
+      id: number;
       email: string;
       passClaimed: boolean;
-      extraPasses: ExtraPass[];
+      // extraPasses: ExtraPass[];
       role: Role;
     } & DefaultSession["user"];
   }
@@ -63,7 +63,7 @@ export const authConfig = {
           ...session.user,
           id: user.id,
           email: user.email,
-          extraPasses: dbUser?.ExtraPass ?? [],
+          // extraPasses: dbUser?.ExtraPass ?? [],
           role: dbUser?.role ?? "USER",
           passClaimed: dbUser?.passClaimed ?? false,
         },

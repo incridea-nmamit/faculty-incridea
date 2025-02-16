@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import PleaseLogin from "./_components/pleaseLogin";
 import Unauthorised from "./_components/unauthorised";
+import Faculty from "./_components/faculty";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -17,7 +18,7 @@ export default function Home() {
       ) : !session.user.email.endsWith("@nitte.edu.in") ? (
         <Unauthorised />
       ) : (
-        <>Hello</>
+        <Faculty />
       )}
     </div>
   );

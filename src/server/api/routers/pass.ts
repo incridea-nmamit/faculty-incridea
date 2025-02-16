@@ -4,7 +4,7 @@ import { Relation } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 export const passRouter = createTRPCRouter({
-  getFacultyPass: facultyProcedure.mutation(async ({ ctx }) => {
+  claimFacultyPass: facultyProcedure.mutation(async ({ ctx }) => {
     return await ctx.db.user.update({
       where: {
         email: ctx.session.user.email,
@@ -15,7 +15,7 @@ export const passRouter = createTRPCRouter({
     });
   }),
 
-  getExtraPass: facultyProcedure
+  claimExtraPass: facultyProcedure
     .input(
       z.object({
         name: z.string(),
@@ -53,4 +53,12 @@ export const passRouter = createTRPCRouter({
         },
       });
     }),
+
+  getExtraPasses: facultyProcedure.query(async ({ ctx }) => {
+    return await ctx.db.extraPass.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+  }),
 });
