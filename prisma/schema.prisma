@@ -79,6 +79,11 @@ model ExtraPass {
     createdAt DateTime @default(now())
 }
 
+model ClientSettings {
+    id  Int @id @default(autoincrement())
+    day Day @default(DAY1)
+}
+
 enum Relation {
     PARENT
     CHILD
@@ -90,4 +95,9 @@ enum Role {
     ADMIN
     USER
     VOLUNTEER
+}
+
+enum Day {
+    DAY1
+    DAY2
 }
