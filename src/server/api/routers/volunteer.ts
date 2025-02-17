@@ -13,12 +13,11 @@ export const volunteerRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const type = input.passId.startsWith("F") ? "faculty" : "dependant";
+
       if (type === "faculty") {
         const facultyId = facultyID2Num(input.passId);
         const faculty = await ctx.db.user.findUnique({
-          where: {
-            id: facultyId,
-          },
+          where: { id: facultyId },
         });
         if (!faculty) {
           throw new TRPCError({
@@ -26,42 +25,33 @@ export const volunteerRouter = createTRPCRouter({
             message: "Faculty not found",
           });
         }
-        if (input.day === "1" && faculty.attendedDay1) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Faculty already marked as attended for day 1",
-          });
-        } else {
+        if (input.day === "1") {
+          if (faculty.attendedDay1) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Faculty already marked as attended for day 1",
+            });
+          }
           await ctx.db.user.update({
-            where: {
-              id: facultyId,
-            },
-            data: {
-              attendedDay1: true,
-            },
+            where: { id: facultyId },
+            data: { attendedDay1: true },
           });
-        }
-        if (input.day === "2" && faculty.attendedDay2) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Faculty already marked as attended for day 2",
-          });
-        } else {
+        } else if (input.day === "2") {
+          if (faculty.attendedDay2) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Faculty already marked as attended for day 2",
+            });
+          }
           await ctx.db.user.update({
-            where: {
-              id: facultyId,
-            },
-            data: {
-              attendedDay2: true,
-            },
+            where: { id: facultyId },
+            data: { attendedDay2: true },
           });
         }
       } else {
         const extraPassId = dependantID2Num(input.passId);
         const extraPass = await ctx.db.extraPass.findUnique({
-          where: {
-            id: extraPassId,
-          },
+          where: { id: extraPassId },
         });
         if (!extraPass) {
           throw new TRPCError({
@@ -69,34 +59,27 @@ export const volunteerRouter = createTRPCRouter({
             message: "Dependant not found",
           });
         }
-        if (input.day === "1" && extraPass.attendedDay1) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Dependant already marked as attended for day 1",
-          });
-        } else {
+        if (input.day === "1") {
+          if (extraPass.attendedDay1) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Dependant already marked as attended for day 1",
+            });
+          }
           await ctx.db.extraPass.update({
-            where: {
-              id: extraPassId,
-            },
-            data: {
-              attendedDay1: true,
-            },
+            where: { id: extraPassId },
+            data: { attendedDay1: true },
           });
-        }
-        if (input.day === "2" && extraPass.attendedDay2) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Dependant already marked as attended for day 2",
-          });
-        } else {
+        } else if (input.day === "2") {
+          if (extraPass.attendedDay2) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Dependant already marked as attended for day 2",
+            });
+          }
           await ctx.db.extraPass.update({
-            where: {
-              id: extraPassId,
-            },
-            data: {
-              attendedDay2: true,
-            },
+            where: { id: extraPassId },
+            data: { attendedDay2: true },
           });
         }
       }

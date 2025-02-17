@@ -1,8 +1,16 @@
 import { Scanner } from "@yudiel/react-qr-scanner";
+import { toast } from "sonner";
 import { api } from "~/trpc/react";
 
 export default function Volunteer() {
-  const markAttendance = api.volunteer.markAttended.useMutation();
+  const markAttendance = api.volunteer.markAttended.useMutation({
+    onSuccess: () => {
+      toast.success("Aand");
+    },
+    onError: () => {
+      toast.error("Enchina saavu mareya");
+    },
+  });
 
   return (
     <div>
