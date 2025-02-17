@@ -5,6 +5,7 @@ import PleaseLogin from "./_components/pleaseLogin";
 import Unauthorised from "./_components/unauthorised";
 import Faculty from "../components/faculty";
 import Admin from "../components/admin";
+import Volunteer from "~/components/volunteer";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -15,7 +16,7 @@ export default function Home() {
       ) : session.user.role === "ADMIN" ? (
         <Admin />
       ) : session.user.role === "VOLUNTEER" ? (
-        <>Volunteer</>
+        <Volunteer />
       ) : !session.user.email.endsWith("@nitte.edu.in") ? (
         <Unauthorised />
       ) : (
