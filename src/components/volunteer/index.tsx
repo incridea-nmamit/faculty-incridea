@@ -11,6 +11,7 @@ export default function Volunteer() {
       toast.error("Enchina saavu mareya");
     },
   });
+  const day = api.volunteer.getDay.useQuery().data;
 
   return (
     <div>
@@ -18,7 +19,7 @@ export default function Volunteer() {
         onScan={(result) => {
           if (result) {
             markAttendance.mutate({
-              day: "1",
+              day: day?.day ?? "DAY1",
               passId: result[0]?.rawValue ?? "",
             });
           }

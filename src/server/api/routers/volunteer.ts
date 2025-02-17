@@ -2,13 +2,14 @@ import { z } from "zod";
 import { createTRPCRouter, volunteerProcedure } from "../trpc";
 import { dependantID2Num, facultyID2Num } from "~/lib/utils";
 import { TRPCError } from "@trpc/server";
+import { Day } from "@prisma/client";
 
 export const volunteerRouter = createTRPCRouter({
   markAttended: volunteerProcedure
     .input(
       z.object({
         passId: z.string(),
-        day: z.enum(["1", "2"]),
+        day: z.nativeEnum(Day),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -25,7 +26,7 @@ export const volunteerRouter = createTRPCRouter({
             message: "Faculty not found",
           });
         }
-        if (input.day === "1") {
+        if (input.day === "DAY1") {
           if (faculty.attendedDay1) {
             throw new TRPCError({
               code: "BAD_REQUEST",
@@ -36,7 +37,7 @@ export const volunteerRouter = createTRPCRouter({
             where: { id: facultyId },
             data: { attendedDay1: true },
           });
-        } else if (input.day === "2") {
+        } else if (input.day === "DAY2") {
           if (faculty.attendedDay2) {
             throw new TRPCError({
               code: "BAD_REQUEST",
@@ -59,7 +60,7 @@ export const volunteerRouter = createTRPCRouter({
             message: "Dependant not found",
           });
         }
-        if (input.day === "1") {
+        if (input.day === "DAY1") {
           if (extraPass.attendedDay1) {
             throw new TRPCError({
               code: "BAD_REQUEST",
@@ -70,7 +71,7 @@ export const volunteerRouter = createTRPCRouter({
             where: { id: extraPassId },
             data: { attendedDay1: true },
           });
-        } else if (input.day === "2") {
+        } else if (input.day === "DAY2") {
           if (extraPass.attendedDay2) {
             throw new TRPCError({
               code: "BAD_REQUEST",
@@ -84,4 +85,8 @@ export const volunteerRouter = createTRPCRouter({
         }
       }
     }),
+
+  getDay: volunteerProcedure.query(async ({ ctx }) => {
+    return await ctx.db.clientSettings.findFirst();
+  }),
 });
