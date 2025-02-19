@@ -15,7 +15,7 @@ import { LuLogOut } from "react-icons/lu";
 export default function Unauthorised() {
   const { data: session } = useSession();
   return (
-    <Card className="bg-palate_3 text-palate_2">
+    <Card className="bg-palate_3 text-white">
       <CardHeader>
         <CardTitle>Not Authorized</CardTitle>
         <CardDescription>Error 401</CardDescription>
@@ -40,6 +40,7 @@ export default function Unauthorised() {
           onClick={async () => {
             await signOut();
           }}
+          className="bg-white text-palate_2 hover:scale-105 hover:bg-white hover:text-palate_2"
         >
           <LuLogOut className="mr-2 size-5" />
           Sign Out
