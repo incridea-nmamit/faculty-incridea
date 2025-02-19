@@ -77,7 +77,12 @@ export default function ClaimExtraPass({
 
   return (
     <div>
-      <Button onClick={() => setIsModalOpen(true)}>Claim Your Free Pass</Button>
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        className="bg-white text-red-800"
+      >
+        Claim Your Free Pass
+      </Button>
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">

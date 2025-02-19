@@ -111,8 +111,8 @@ export default function Faculty() {
       </div>
 
       <div className="fixed bottom-0 flex w-full flex-col items-center justify-center gap-4 rounded-t-xl">
-        <div className="flex w-full items-center justify-center gap-4 rounded-t-2xl bg-palate_3 p-4 text-palate_2">
-          <p className="text-white">
+        <div className="flex w-full flex-col items-center justify-center gap-4 rounded-t-2xl bg-palate_3 p-4 text-palate_2 md:flex-row">
+          <p className="text-center text-white">
             You have{" "}
             <span className="text-gray-200 underline">
               {2 - (extraPasses?.length ?? 0)}
