@@ -24,7 +24,7 @@ export default function RootLayout({
         <SessionProvider>
           <TRPCReactProvider>
             <Navbar />
-            <div className="flex min-h-screen w-screen flex-col bg-gradient-to-b from-emerald-950 to-emerald-800">
+            <div className="flex min-h-screen w-screen flex-col bg-gradient-to-b from-red-800 to-red-950">
               {children}
             </div>
           </TRPCReactProvider>

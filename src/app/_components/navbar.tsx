@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`bg-palate_2 fixed z-50 mx-4 mt-[16px] grid w-[calc(100%-32px)] rounded-2xl py-2 lg:mx-[5%] lg:w-[90%] lg:backdrop-blur-xl`}
+      className={`bg-palate_2 fixed z-50 mx-4 mt-[16px] grid w-[calc(100%-32px)] rounded-3xl py-4 lg:mx-[5%] lg:w-[90%] lg:backdrop-blur-xl`}
     >
       <div className="container relative mx-auto px-4 lg:text-sm">
         <div className="flex items-center justify-between">
@@ -24,14 +24,14 @@ const Navbar = () => {
 
           {session ? (
             <button
-              className={`bg-palate_3 text-palate_2 rounded-md border px-3 py-2 font-semibold`}
+              className={`bg-red-700 text-white rounded-3xl px-3 py-2`}
               onClick={() => signOut()}
             >
               Sign Out
             </button>
           ) : (
             <button
-              className={`bg-palate_3 text-palate_2 rounded-md border px-3 py-2 font-semibold`}
+              className={`bg-red-700 text-white rounded-3xl px-3 py-2`}
               onClick={() => signIn("google")}
             >
               Sign In
