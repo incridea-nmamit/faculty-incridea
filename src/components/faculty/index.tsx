@@ -2,12 +2,12 @@
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import SelfPass from "./selfPass";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import QRCode from "react-qr-code";
 import { dependantNum2ID, facultyNum2ID } from "~/lib/utils";
 import { api } from "~/trpc/react";
 import ClaimExtraPass from "./claimExtraPass";
 import { Badge } from "~/components/ui/badge";
+import Image from "next/image";
 
 export default function Faculty() {
   const { data: session } = useSession();
@@ -16,21 +16,34 @@ export default function Faculty() {
   const { data: extraPasses, refetch: refetchExtraPasses } =
     api.pass.getExtraPasses.useQuery();
 
-  const attended = "bg-green-500/50 text-green-500 border-green-500";
-  const notAttended = "bg-red-500/50 text-red-500 border-red-500";
+  const day = api.volunteer.getDay.useQuery().data;
+
+  const attended = " text-green-500 bg-white";
+  const notAttended = "text-red-500 bg-white";
 
   if (!claimed) {
     return <SelfPass onClaim={setClaimed} />;
   }
 
   return (
-    <div className="flex w-full items-center justify-center gap-4 py-24">
+    <div className="mx-8 flex w-full items-center justify-center gap-4 py-28">
       <div className="flex flex-wrap justify-center gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex w-full flex-col items-center justify-center gap-2 text-center text-2xl">
-              <span>My Pass</span>
-              <div className="flex items-center gap-2">
+        <div className="relative">
+          <Image
+            src={day?.day === "DAY2" ? "/pass2.png" : "/pass1.png"}
+            alt="Pass"
+            width={300}
+            height={600}
+          />
+          <div className="absolute inset-0 flex flex-col">
+            <div className="absolute right-8 mt-[9.8rem] flex w-fit flex-col text-center font-bold text-white">
+              <span>{facultyID}</span>
+              <span>
+                {(session?.user?.name ?? "").length > 15
+                  ? session?.user?.name?.substring(0, 12) + "..."
+                  : session?.user?.name}
+              </span>
+              <div className="flex gap-2 pt-2">
                 <Badge
                   className={
                     session?.user.attendedDay1 ? attended : notAttended
@@ -46,26 +59,32 @@ export default function Faculty() {
                   Day 2
                 </Badge>
               </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center justify-center gap-4">
-            <QRCode
-              value={facultyID}
-              height={100}
-              width={100}
-              className="self-center rounded-xl"
-            />
-            <p className="text-center text-2xl font-bold">{facultyID}</p>
-          </CardContent>
-        </Card>
+            </div>
+
+            <div className="absolute left-[2.2rem] top-[9.2rem]">
+              <QRCode value={facultyID} size={82} className="rounded-md" />
+            </div>
+          </div>
+        </div>
 
         {(extraPasses ?? []).length > 0 &&
           (extraPasses ?? []).map((pass) => (
-            <Card key={pass.id}>
-              <CardHeader>
-                <CardTitle className="flex w-full flex-col items-center justify-center gap-2 text-center text-2xl">
-                  <span>{pass.name}</span>
-                  <div className="flex items-center gap-2">
+            <div className="relative" key={pass.id}>
+              <Image
+                src={day?.day === "DAY1" ? "/pass1.png" : "/pass2.png"}
+                alt="Pass"
+                width={300}
+                height={600}
+              />
+              <div className="absolute inset-0 flex flex-col">
+                <div className="absolute right-8 mt-[9.8rem] flex w-fit flex-col items-center justify-center text-center font-bold text-white">
+                  <span>{dependantNum2ID(pass.id)}</span>
+                  <span>
+                    {(pass.name ?? "").length > 15
+                      ? pass.name.substring(0, 12) + "..."
+                      : pass.name}
+                  </span>
+                  <div className="flex gap-2 pt-2">
                     <Badge
                       className={pass.attendedDay1 ? attended : notAttended}
                     >
@@ -77,26 +96,23 @@ export default function Faculty() {
                       Day 2
                     </Badge>
                   </div>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-4">
-                <QRCode
-                  value={dependantNum2ID(pass.id)}
-                  height={100}
-                  width={100}
-                  className="rounded-xl"
-                />
-                <p className="text-center text-2xl font-bold">
-                  {dependantNum2ID(pass.id)}
-                </p>
-              </CardContent>
-            </Card>
+                </div>
+
+                <div className="absolute left-[2.2rem] top-[9.2rem]">
+                  <QRCode
+                    value={dependantNum2ID(pass.id)}
+                    size={82}
+                    className="rounded-md"
+                  />
+                </div>
+              </div>
+            </div>
           ))}
       </div>
 
       <div className="fixed bottom-0 flex w-full flex-col items-center justify-center gap-4 rounded-t-xl">
         <div className="flex w-full items-center justify-center gap-4 rounded-t-2xl bg-palate_3 p-4 text-palate_2">
-          <p className="text-white  ">
+          <p className="text-white">
             You have{" "}
             <span className="text-gray-200 underline">
               {2 - (extraPasses?.length ?? 0)}

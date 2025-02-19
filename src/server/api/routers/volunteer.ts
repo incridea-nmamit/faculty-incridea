@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, volunteerProcedure } from "../trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  volunteerProcedure,
+} from "../trpc";
 import { dependantID2Num, facultyID2Num } from "~/lib/utils";
 import { TRPCError } from "@trpc/server";
 import { Day } from "@prisma/client";
@@ -86,7 +90,7 @@ export const volunteerRouter = createTRPCRouter({
       }
     }),
 
-  getDay: volunteerProcedure.query(async ({ ctx }) => {
+  getDay: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.clientSettings.findFirst();
   }),
 });
