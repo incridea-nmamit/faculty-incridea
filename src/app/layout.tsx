@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <Toaster />
+        <Toaster position="top-center"/>
         <SessionProvider>
           <TRPCReactProvider>
             <Navbar />
@@ -33,3 +33,4 @@ export default function RootLayout({
     </html>
   );
 }
+    

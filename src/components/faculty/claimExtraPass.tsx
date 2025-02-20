@@ -26,8 +26,6 @@ import { z } from "zod";
 import { api } from "~/trpc/react";
 import { toast } from "sonner";
 import { Relation } from "@prisma/client";
-import { CardFooter } from "~/components/ui/card";
-
 export default function ClaimExtraPass({
   passesRefetch,
 }: {

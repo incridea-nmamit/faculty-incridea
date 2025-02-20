@@ -5,45 +5,52 @@ import { TRPCError } from "@trpc/server";
 import { env } from "~/env";
 
 export const passRouter = createTRPCRouter({
-  claimFacultyPass: facultyProcedure.mutation(async ({ ctx }) => {
-    const user = await ctx.db.user.update({
-      where: {
-        email: ctx.session.user.email,
-      },
-      data: {
-        passClaimed: true,
-      },
-    });
-
-    const response = await fetch(
-      `${env.CAPTURE_INCRIDEA_URL}/api/verifiedEmail`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${env.CAPTURE_INCRIDEA_SECRET}`,
-        },
-        body: JSON.stringify({
-          email: user.email,
-          name: user.name,
-          phoneNumber: "0000000000",
-          specialType: "faculty",
-        }),
-      },
-    );
-
-    if (response.status === 200) {
-      await ctx.db.user.update({
+  claimFacultyPass: facultyProcedure
+    .input(
+      z.object({
+        phoneNumber: z.string().min(10).max(10).optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.db.user.update({
         where: {
           email: ctx.session.user.email,
         },
         data: {
-          captureUpdated: true,
+          passClaimed: true,
+          phoneNumber: input.phoneNumber,
         },
       });
-    }
+      const phone = input.phoneNumber ?? "";
+      const response = await fetch(
+        `${env.CAPTURE_INCRIDEA_URL}/api/verifiedEmail`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${env.CAPTURE_INCRIDEA_SECRET}`,
+          },
+          body: JSON.stringify({
+            email: user.email,
+            name: user.name,
+            phoneNumber: phone,
+            specialType: "faculty",
+          }),
+        },
+      );
 
-    return user;
-  }),
+      if (response.status === 200) {
+        await ctx.db.user.update({
+          where: {
+            email: ctx.session.user.email,
+          },
+          data: {
+            captureUpdated: true,
+          },
+        });
+      }
+
+      return user;
+    }),
 
   claimExtraPass: facultyProcedure
     .input(
