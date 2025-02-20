@@ -15,6 +15,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
     CLOUDINARY_API_SECRET: z.string(),
+    CAPTURE_INCRIDEA_URL: z.string(),
+    CAPTURE_INCRIDEA_SECRET: z.string(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -43,6 +45,8 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+    CAPTURE_INCRIDEA_URL: process.env.CAPTURE_INCRIDEA_URL,
+    CAPTURE_INCRIDEA_SECRET: process.env.CAPTURE_INCRIDEA_SECRET,
     NEXT_PUBLIC_CLOUDINARY_API_KEY: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
       process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,

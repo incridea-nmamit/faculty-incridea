@@ -2,10 +2,11 @@ import { z } from "zod";
 import { createTRPCRouter, facultyProcedure } from "../trpc";
 import { Relation } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+import { env } from "~/env";
 
 export const passRouter = createTRPCRouter({
   claimFacultyPass: facultyProcedure.mutation(async ({ ctx }) => {
-    return await ctx.db.user.update({
+    const user = await ctx.db.user.update({
       where: {
         email: ctx.session.user.email,
       },
@@ -13,6 +14,35 @@ export const passRouter = createTRPCRouter({
         passClaimed: true,
       },
     });
+
+    const response = await fetch(
+      `${env.CAPTURE_INCRIDEA_URL}/api/verifiedEmail`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.CAPTURE_INCRIDEA_SECRET}`,
+        },
+        body: JSON.stringify({
+          email: user.email,
+          name: user.name,
+          phoneNumber: "0000000000",
+          specialType: "faculty",
+        }),
+      },
+    );
+
+    if (response.status === 200) {
+      await ctx.db.user.update({
+        where: {
+          email: ctx.session.user.email,
+        },
+        data: {
+          captureUpdated: true,
+        },
+      });
+    }
+
+    return user;
   }),
 
   claimExtraPass: facultyProcedure
