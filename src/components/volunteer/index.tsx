@@ -8,7 +8,7 @@ export default function Volunteer() {
       toast.success("Aand");
     },
     onError: () => {
-      toast.error("Enchina saavu mareya");
+      toast.error("Already Checked-In for the day!");
     },
   });
   const day = api.volunteer.getDay.useQuery().data;

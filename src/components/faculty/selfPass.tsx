@@ -21,7 +21,7 @@ export default function SelfPass({ onClaim }: SelfPassProps) {
   });
   return (
     <div className="flex items-center justify-center py-24">
-      <Card className="w-full max-w-md">
+      <Card className="mx-4 w-full max-w-md border border-none bg-palate_3 text-white">
         <CardHeader>
           <CardTitle className="text-center text-2xl">
             Claim Your Pass
@@ -35,6 +35,7 @@ export default function SelfPass({ onClaim }: SelfPassProps) {
             onClick={async () => {
               await claimSelfpass.mutateAsync();
             }}
+            className="bg-white text-red-800 hover:bg-white hover:text-red-800"
           >
             Claim My Pass
           </Button>
