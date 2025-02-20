@@ -26,7 +26,7 @@ export default function Faculty() {
   }
 
   return (
-    <div className="mx-8 flex w-full items-center justify-center gap-4 py-28">
+    <div className="flex w-full items-center justify-center gap-4 py-28">
       <div className="flex flex-wrap justify-center gap-6">
         <div className="relative">
           <Image
@@ -36,7 +36,7 @@ export default function Faculty() {
             height={600}
           />
           <div className="absolute inset-0 flex flex-col">
-            <div className="absolute right-8 mt-[9.8rem] flex w-fit flex-col text-center font-bold text-white">
+            <div className="absolute right-10 mt-[9.8rem] flex w-fit flex-col text-center font-bold text-white">
               <span>{facultyID}</span>
               <span>
                 {(session?.user?.name ?? "").length > 15
@@ -61,7 +61,7 @@ export default function Faculty() {
               </div>
             </div>
 
-            <div className="absolute left-[2.2rem] top-[9.2rem]">
+            <div className="absolute left-[2.2rem] top-[9.25rem]">
               <QRCode value={facultyID} size={82} className="rounded-md" />
             </div>
           </div>
@@ -77,7 +77,7 @@ export default function Faculty() {
                 height={600}
               />
               <div className="absolute inset-0 flex flex-col">
-                <div className="absolute right-8 mt-[9.8rem] flex w-fit flex-col items-center justify-center text-center font-bold text-white">
+                <div className="absolute right-10 mt-[9.8rem] flex w-fit flex-col items-center justify-center text-center font-bold text-white">
                   <span>{dependantNum2ID(pass.id)}</span>
                   <span>
                     {(pass.name ?? "").length > 15
@@ -98,7 +98,7 @@ export default function Faculty() {
                   </div>
                 </div>
 
-                <div className="absolute left-[2.2rem] top-[9.2rem]">
+                <div className="absolute left-[2.2rem] top-[9.25rem]">
                   <QRCode
                     value={dependantNum2ID(pass.id)}
                     size={82}

@@ -79,14 +79,14 @@ export default function ClaimExtraPass({
     <div>
       <Button
         onClick={() => setIsModalOpen(true)}
-        className="bg-white text-red-800"
+        className="bg-white text-red-800 transition-all duration-300 hover:scale-105 hover:bg-white hover:text-red-800"
       >
         Claim Your Free Pass
       </Button>
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="relative w-[30rem] rounded bg-white p-6 shadow">
+          <div className="relative mx-6 w-[30rem] rounded bg-white p-6 shadow">
             <button
               className="absolute right-5 top-5"
               onClick={() => setIsModalOpen(false)}
@@ -182,7 +182,7 @@ export default function ClaimExtraPass({
                                 field.onChange(res.info.secure_url);
                               }
                             }}
-                            className="rounded-lg bg-black px-4 py-2 text-white"
+                            className="rounded-lg bg-red-800 px-4 py-2 text-white"
                           >
                             Upload ID Proof
                           </CldUploadButton>
@@ -192,9 +192,15 @@ export default function ClaimExtraPass({
                     </FormItem>
                   )}
                 />
-                <CardFooter className="flex w-full justify-end">
-                  <Button type="submit">Submit</Button>
-                </CardFooter>
+
+                <div className="flex w-full justify-end">
+                  <Button
+                    type="submit"
+                    className="bg-red-800 text-white hover:bg-red-800 hover:text-white"
+                  >
+                    Submit
+                  </Button>
+                </div>
               </form>
             </Form>
           </div>
