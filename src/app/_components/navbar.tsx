@@ -10,13 +10,13 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed z-50 mx-4 mt-[16px] grid w-[calc(100%-32px)] rounded-3xl bg-red-800 py-4 shadow-2xl lg:mx-[5%] lg:w-[90%] lg:backdrop-blur-xl`}
+      className={`fixed z-50 mx-2 lg:mx-[5%] mt-[16px] grid w-[calc(100%-16px)] lg:w-[90%] rounded-3xl bg-red-800 py-4 shadow-2xl lg:backdrop-blur-xl`}
     >
       <div className="container relative mx-auto px-4 lg:text-sm">
         <div className="flex items-center justify-between px-4 lg:px-16">
           <div className="flex items-center">
             <Image
-              className="mr-2"
+              className="mr-1 lg:mr-2"
               src="/logo.png"
               alt="Logo"
               width={100}
