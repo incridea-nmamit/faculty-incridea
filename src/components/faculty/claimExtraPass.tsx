@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { CldImage, CldUploadButton } from "next-cloudinary";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -17,7 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { env } from "~/env";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,14 +37,12 @@ export default function ClaimExtraPass({
     }),
     relation: z.nativeEnum(Relation),
     age: z.number().min(16, { message: "Minimum 16 years of age." }),
-    idProof: z.string().url({ message: "ID Proof is mandatory" }),
   });
 
   const form = useForm<z.infer<typeof passSchema>>({
     resolver: zodResolver(passSchema),
     defaultValues: {
       age: 0,
-      idProof: "",
       name: "",
       relation: "SPOUSE",
     },
@@ -67,7 +63,6 @@ export default function ClaimExtraPass({
   const onSubmit = async (values: z.infer<typeof passSchema>) => {
     await claimExtraPass.mutateAsync({
       age: values.age,
-      idProof: values.idProof,
       name: values.name,
       relation: values.relation,
     });
@@ -156,41 +151,6 @@ export default function ClaimExtraPass({
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="idProof"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        {field.value ? (
-                          <CldImage
-                            src={field.value}
-                            alt="ID Proof"
-                            width={100}
-                            height={100}
-                          />
-                        ) : (
-                          <CldUploadButton
-                            uploadPreset={
-                              env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
-                            }
-                            onSuccess={(res) => {
-                              if (res.info) {
-                                //@ts-expect-error It is what it is
-                                field.onChange(res.info.secure_url);
-                              }
-                            }}
-                            className="rounded-lg bg-red-800 px-4 py-2 text-white"
-                          >
-                            Upload ID Proof
-                          </CldUploadButton>
-                        )}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
                 <div className="flex w-full justify-end">
                   <Button
                     type="submit"

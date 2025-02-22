@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, facultyProcedure } from "../trpc";
+import { createTRPCRouter, facultyProcedure, protectedProcedure } from "../trpc";
 import { Relation } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { env } from "~/env";
@@ -52,14 +52,13 @@ export const passRouter = createTRPCRouter({
       return user;
     }),
 
-  claimExtraPass: facultyProcedure
+  claimExtraPass: protectedProcedure
     .input(
       z.object({
         name: z.string(),
-        relation: z.nativeEnum(Relation),
         age: z.number(),
-        idProof: z.string(),
-      }),
+        relation: z.nativeEnum(Relation),
+      })
     )
     .mutation(async ({ ctx, input }) => {
       const extraPasses = await ctx.db.user.findUnique({
@@ -79,14 +78,9 @@ export const passRouter = createTRPCRouter({
       return await ctx.db.extraPass.create({
         data: {
           name: input.name,
-          relation: input.relation,
           age: input.age,
-          idProof: input.idProof,
-          DependantOn: {
-            connect: {
-              email: ctx.session.user.email,
-            },
-          },
+          relation: input.relation,
+          userId: ctx.session.user.id,
         },
       });
     }),

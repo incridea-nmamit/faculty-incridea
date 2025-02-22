@@ -71,7 +71,7 @@ model ExtraPass {
     name         String
     relation     Relation
     age          Int
-    idProof      String
+    idProof      String?
     attendedDay1 Boolean  @default(false)
     attendedDay2 Boolean  @default(false)
 
