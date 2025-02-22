@@ -36,7 +36,7 @@ export default function ClaimExtraPass({
       message: "Name should be minimum 3 characters.",
     }),
     relation: z.nativeEnum(Relation),
-    age: z.number().min(16, { message: "Minimum 16 years of age." }),
+    age: z.number().min(0, { message: "Minimum 0 years of age." }),
   });
 
   const form = useForm<z.infer<typeof passSchema>>({
