@@ -6,7 +6,6 @@ import { Checkbox } from "~/components/ui/checkbox";
 
 import SortingHeader from "~/components/tanstack/sortingHeader";
 import { dependantNum2ID, facultyNum2ID } from "~/lib/utils";
-import { Button } from "../ui/button";
 
 export const FacultyColumns: ColumnDef<User>[] = [
   {
@@ -93,16 +92,5 @@ export const DependantColumns: ColumnDef<ExtraPass>[] = [
     id: "age",
     accessorKey: "age",
     header: "Age",
-  },
-  {
-    id: "idProof",
-    accessorKey: "idProof",
-    cell: ({ cell }) => (
-      <>
-        <a href={cell.row.original.idProof} target="_blank">
-          <Button>IDProof</Button>
-        </a>
-      </>
-    ),
   },
 ];
