@@ -42,7 +42,7 @@ model User {
     id             Int         @id @default(autoincrement())
     name           String?
     email          String      @unique
-    phoneNumber    String?     // Add this line
+    phoneNumber    String? // Add this line
     emailVerified  DateTime?
     image          String?
     role           Role        @default(USER)
@@ -71,7 +71,6 @@ model ExtraPass {
     name         String
     relation     Relation
     age          Int
-    idProof      String?
     attendedDay1 Boolean  @default(false)
     attendedDay2 Boolean  @default(false)
 
