@@ -17,10 +17,10 @@ export default function Home() {
         <Admin />
       ) : session.user.role === "VOLUNTEER" ? (
         <Volunteer />
-      ) : !session.user.email.endsWith("@nitte.edu.in") ? (
-        <Unauthorised />
-      ) : (
+      ) : session.user.email.endsWith("@nitte.edu.in") || session.user.email.endsWith("@nmamit.in") ? (
         <Faculty />
+      ) : (
+        <Unauthorised />
       )}
     </div>
   );

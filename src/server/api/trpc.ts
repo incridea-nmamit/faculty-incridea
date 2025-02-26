@@ -138,7 +138,10 @@ export const facultyProcedure = t.procedure
     if (
       !ctx.session ||
       !ctx.session.user ||
-      !ctx.session.user.email?.endsWith("@nitte.edu.in")
+      !(
+        ctx.session.user.email.endsWith("@nitte.edu.in") ||
+        ctx.session.user.email.endsWith("@nmamit.in")
+      )
     ) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
